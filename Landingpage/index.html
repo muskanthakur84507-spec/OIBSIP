@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlowCare - Natural Skincare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">GlowCare</div>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#products">Products</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="cart">🛒 Cart: <span id="cart-count">0</span></div>
+        <div id="cart-box" class="cart-box">
+    <h3>Your Cart 🛒</h3>
+    <div id="cart-items"></div>
+    <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
+    <button id="checkout-btn" style="display:none;">Checkout</button>
+</div>
+    </nav>
+    <section id="checkout" class="checkout" style="display:none;">
+    <h2>Checkout</h2>
+
+    <form id="order-form">
+        <input type="text" placeholder="Your Name" required>
+        <input type="tel" placeholder="Phone Number" required>
+        <textarea placeholder="Delivery Address" required></textarea>
+
+        <button type="submit">Place Order</button>
+    </form>
+</section>
+        <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Natural Care for Your Everyday Glow</h1>
+            <p>
+                Simple, gentle and natural skincare products
+                designed to make your daily routine better.
+            </p>
+            <a href="#features" class="btn">Explore Products</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Why Choose GlowCare?</h2>
+
+        <div class="feature-container">
+            <div class="card">
+                <h3>🌿 Natural</h3>
+                <p>Made with simple and skin-friendly ingredients.</p>
+            </div>
+
+            <div class="card">
+                <h3>✨ Gentle</h3>
+                <p>Designed for a comfortable everyday skincare routine.</p>
+            </div>
+
+            <div class="card">
+                <h3>💚 Simple</h3>
+                <p>Easy products for an easy and refreshing routine.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+  <!-- Products Section -->
+<section id="products" class="products">
+    <h2>Our Products</h2>
+
+    <div class="product-container">
+
+        <div class="product-card">
+            <div class="product-image">
+    <img src="images/aloe-vera.jpg.png" alt="Aloe Vera Gel">
+</div>
+            <h3>Aloe Vera Gel</h3>
+            <p>Fresh and gentle skincare for everyday use.</p>
+            <h4>₹199</h4>
+            <button>Buy Now</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+    <img src="images/face-wash.jpg.png" alt="Natural Face Wash">
+</div>
+            <h3>Natural Face Wash</h3>
+            <p>A simple cleanser for a fresh daily routine.</p>
+            <h4>₹249</h4>
+            <button>Buy Now</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+    <img src="images/glow-serum.jpg.png" alt="Glow Serum">
+</div>
+            <h3>Glow Serum</h3>
+            <p>Lightweight skincare for a fresh-looking feel.</p>
+            <h4>₹299</h4>
+            <button>Buy Now</button>
+        </div>
+
+    </div>
+</section>  
+    <section id="about" class="about">
+        <h2>About GlowCare</h2>
+        <p>
+            GlowCare is a simple skincare brand focused on creating
+            a clean and enjoyable everyday experience.
+        </p>
+    </section>
+        <!-- Footer -->
+<footer id="contact">
+    <h3>GlowCare</h3>
+    <p>Email: hello@glowcare.com</p>
+    <p>Instagram | Facebook | LinkedIn</p>
+    <p>© 2026 GlowCare. All Rights Reserved.</p>
+</footer>
+
+<script>
+    const buttons = document.querySelectorAll(".product-card button");
+    const cart = document.querySelector(".cart");
+    const cartBox = document.getElementById("cart-box");
+    const cartItems = document.getElementById("cart-items");
+    const cartCount = document.getElementById("cart-count");
+    const cartTotal = document.getElementById("cart-total");
+
+    let items = [];
+    let total = 0;
+
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            const product = button.parentElement;
+            const name = product.querySelector("h3").innerText;
+            const price = parseInt(
+                product.querySelector("h4").innerText.replace("₹", "")
+            );
+
+            items.push({ name: name, price: price });
+            total += price;
+
+            updateCart();
+
+            alert(name + " added to your cart! 🛒🌸");
+        });
+    });
+
+    function updateCart() {
+        cartCount.innerText = items.length;
+        cartTotal.innerText = total;
+
+        cartItems.innerHTML = "";
+
+        items.forEach(function(item) {
+            const p = document.createElement("p");
+            p.innerText = "🌸 " + item.name + " - ₹" + item.price;
+            cartItems.appendChild(p);
+        });
+
+        if (items.length > 0) {
+            document.getElementById("checkout-btn").style.display = "block";
+        }
+    }
+
+    cart.addEventListener("click", function() {
+        if (cartBox.style.display === "block") {
+            cartBox.style.display = "none";
+        } else {
+            cartBox.style.display = "block";
+        }
+    });
+
+    document.getElementById("checkout-btn").addEventListener("click", function() {
+        document.getElementById("checkout").style.display = "block";
+        cartBox.style.display = "none";
+        document.getElementById("checkout").scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+
+    document.getElementById("order-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        alert("🎉 Order placed successfully! Thank you for choosing GlowCare. 🌸");
+
+        items = [];
+        total = 0;
+        updateCart();
+
+        document.getElementById("order-form").reset();
+        document.getElementById("checkout").style.display = "none";
+    });
+</script>
+</body>
+</html>
